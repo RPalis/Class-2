@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Page setup: metadata, stylesheet, and React/Babel dependencies -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pricing Plans — JSX version</title>
@@ -8,51 +9,49 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 <body>
+    <!-- React mount point: app UI renders inside this container -->
     <div id="root"></div>
     <script type="text/babel" data-type="module">
-        // Components can be used INSIDE other components — this is called "composition"
-        // This Button component is small, but it keeps button styling/logic in one place
-        // "variant" defaults to "secondary" if not provided — this is called a default parameter
+        // ===== Reusable UI blocks =====
+        // Button component: shared CTA style with a switchable visual variant.
         function Button({ label, variant = "secondary" }) {
             return (
-                // Template literal (``) lets us build a className string with the variant value
+                // Combines the base button class with the selected variant.
                 <button className={`download-button ${variant}`}>{label}</button>
             );
         }
 
-        // Same card UI, written as a JSX component (HTML-like syntax inside JavaScript)
-        // This component is reusable - we can create multiple cards by passing different data
+        // Pricing card component: same visual card, powered by props.
         function PricingCard({ title, price, includesText, features, buttonText, buttonVariant }) {
             return (
-                // JSX uses "className" instead of "class" because "class" is a reserved word in JavaScript
                 <div className="card">
-                    {/* Curly braces { } let you insert JavaScript expressions into JSX */}
+                    {/* Dynamic text values come from the plan data objects */}
                     <h1 className="card-title">{title}</h1>
                     <p className="card-price">{price}</p>
                     <div className="card-content">
                         <p className="includes-text">{includesText}</p>
                         <ul className="features-list">
-                            {/* .map() loops through the features array and creates a <li> for each item */}
+                            {/* Loops through each feature and renders a checklist row */}
                             {features.map((feature, i) => (
-                                // "key" helps React track which items changed - using index (i) is OK for static lists
                                 <li key={i}>
-                                    <span className="checkmark">✓</span>
+                                    <i data-lucide="check" className="checkmark" aria-hidden="true"></i>
                                     {feature}
                                 </li>
                             ))}
                         </ul>
                     </div>
-                    {/* Using our Button component instead of a raw <button> element */}
+                    {/* Reuses the shared Button component for card actions */}
                     <Button label={buttonText} variant={buttonVariant} />
                 </div>
             );
         }
 
+        // ===== Page composition =====
         function App() {
-            // In JSX, we separate DATA from PRESENTATION
-            // These objects hold all the content for each pricing card
+            // Plan content lives in objects so layout and content stay separate.
             const hobbyPlan = {
                 title: 'Hobby',
                 price: 'Free',
@@ -88,12 +87,11 @@
                 buttonVariant: 'primary',
             };
             return (
-                // <> is a React Fragment - it groups elements without adding extra HTML divs
                 <>
+                    {/* Page label to identify this implementation variant */}
                     <p className="page-label"><strong>JSX version</strong> — same UI, built with components</p>
                     <div className="cards-container">
-                        {/* The spread operator {...hobbyPlan} passes all object properties as individual props */}
-                        {/* This is the same as writing: title="Hobby" price="Free" includesText="Includes:" etc. */}
+                        {/* Spread syntax passes each plan object into one reusable card component */}
                         <PricingCard {...hobbyPlan} />
                         <PricingCard {...proPlan} />
                         <PricingCard {...ExtendedPlan} />
@@ -104,9 +102,11 @@
             );
         }
 
-        // This tells React to render our App component into the <div id="root"> element
+        // ===== App startup =====
+        // Mounts React app into #root and initializes Lucide icons.
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
+        lucide.createIcons();
     </script>
 </body>
 </html>
