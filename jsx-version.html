@@ -25,12 +25,15 @@
         }
 
         // Pricing card component: same visual card, powered by props.
-        function PricingCard({ title, price, includesText, features, buttonText, buttonVariant }) {
+        function PricingCard({ title, priceAmount, pricePeriod, includesText, features, buttonText, buttonVariant }) {
             return (
                 <div className="card">
                     {/* Dynamic text values come from the plan data objects */}
                     <h1 className="card-title">{title}</h1>
-                    <p className="card-price">{price}</p>
+                    <p className="card-price">
+                        <span className="card-price-amount">{priceAmount}</span>
+                        {pricePeriod && <span className="card-price-period">{pricePeriod}</span>}
+                    </p>
                     <div className="card-content">
                         <p className="includes-text">{includesText}</p>
                         <ul className="features-list">
@@ -54,7 +57,8 @@
             // Plan content lives in objects so layout and content stay separate.
             const hobbyPlan = {
                 title: 'Hobby',
-                price: 'Free',
+                priceAmount: 'Free',
+                pricePeriod: '',
                 includesText: 'Includes:',
                 features: ['No credit card required', 
                 'Limited Agent requests',  
@@ -66,7 +70,8 @@
             };
             const proPlan = {
                 title: 'Pro',
-                price: '$20/mo.',
+                priceAmount: '$20',
+                pricePeriod: '/mo.',
                 includesText: 'Everything in Hobby, plus:',
                 features: [
                     'Extended limits on Agent',
@@ -79,7 +84,8 @@
             };
             const ExtendedPlan = {
                 title: 'Extended',
-                price: '$30/mo.',
+                priceAmount: '$30',
+                pricePeriod: '/mo.',
                 includesText: 'Everything in Pro, plus:',
                 features: [
                     'Extended limits on Agent',
@@ -91,7 +97,8 @@
             };
             const EnterprisePlan = {
                 title: 'Enterprise',
-                price: 'Custom.',
+                priceAmount: 'Custom',
+                pricePeriod: '/mo.',
                 includesText: 'Everything in Pro, plus:',
                 features: [
                     'Priority support',
