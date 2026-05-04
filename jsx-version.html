@@ -28,23 +28,25 @@
         function PricingCard({ title, priceAmount, pricePeriod, includesText, features, buttonText, buttonVariant }) {
             return (
                 <div className="card">
-                    {/* Dynamic text values come from the plan data objects */}
-                    <h1 className="card-title">{title}</h1>
-                    <p className="card-price">
-                        <span className="card-price-amount">{priceAmount}</span>
-                        {pricePeriod && <span className="card-price-period">{pricePeriod}</span>}
-                    </p>
-                    <div className="card-content">
-                        <p className="includes-text">{includesText}</p>
-                        <ul className="features-list">
-                            {/* Loops through each feature and renders a checklist row */}
-                            {features.map((feature, i) => (
-                                <li key={i}>
-                                    <i data-lucide="check" className="checkmark" aria-hidden="true"></i>
-                                    {feature}
-                                </li>
-                            ))}
-                        </ul>
+                    <div className="card-top">
+                        {/* Dynamic text values come from the plan data objects */}
+                        <h1 className="card-title">{title}</h1>
+                        <p className="card-pric%e">
+                            <span className="card-price-amount">{priceAmount}</span>
+                            {pricePeriod && <span className="card-price-period">{pricePeriod}</span>}
+                        </p>
+                        <div className="card-content">
+                            <p className="includes-text">{includesText}</p>
+                            <ul className="features-list">
+                                {/* Loops through each feature and renders a checklist row */}
+                                {features.map((feature, i) => (
+                                    <li key={i}>
+                                        <i data-lucide="check" className="checkmark" aria-hidden="true"></i>
+                                        {feature}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
                     </div>
                     {/* Reuses the shared Button component for card actions */}
                     <Button label={buttonText} variant={buttonVariant} />
